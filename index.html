@@ -9,6 +9,7 @@
 body { margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7ff; color:#1c1c1c;}
 h1,h2,h3,p{margin:0;}
 button{font-family:inherit; cursor:pointer;}
+
 /* ---------------- PAGE MAIL ---------------- */
 #gate {position:fixed; inset:0; background:#e6ebff; display:flex; align-items:center; justify-content:center; text-align:center; z-index:9999;}
 .gate-card{background:#fff; padding:50px 35px; border-radius:25px; max-width:450px; width:90%; box-shadow:0 20px 40px rgba(0,0,0,0.08); display:flex; flex-direction:column; align-items:center;}
@@ -18,7 +19,7 @@ button{font-family:inherit; cursor:pointer;}
 .gate-card input:focus{outline:none;border-color:#6c7cff;}
 #okBtn{padding:12px 25px; border:none; border-radius:12px; background:#6c7cff;color:white;font-weight:600;font-size:1em;margin-bottom:15px;}
 #okBtn:hover{background:#5664e0;}
-.lang-inline{display:flex; gap:12px; margin-top:15px;}
+.lang-inline{display:flex; gap:12px; margin-top:25px;}
 .lang-inline button{padding:5px 20px; font-size:0.85em; border-radius:12px; border:2px solid #6c7cff; background:#c6ccff; color:#6c7cff;}
 .lang-inline button:hover{background:#aab8ff;}
 #gateError{color:#d33; font-weight:500; margin-top:12px;}
@@ -70,21 +71,21 @@ header p{font-size:1.1em;color:#5b5b5b;}
 
 <!-- ---------------- SITE ---------------- -->
 <header id="mainContent" style="display:none">
-  <h1 data-fr="Logement étudiant – Festival d’Annecy"
-      data-en="Student Housing – Annecy Festival"></h1>
-  <p data-fr="Plateforme solidaire entre étudiants Gobelins"
-     data-en="A solidarity platform for Gobelins students"></p>
+  <h1 data-fr="Logement étudiant – Festival d’Annecy 🎨✨"
+      data-en="Student Housing – Annecy Festival 🎨✨"></h1>
+  <p data-fr="Plateforme solidaire entre étudiants Gobelins 💜"
+     data-en="A solidarity platform for Gobelins students 💜"></p>
   <a class="main-btn"
      target="_blank"
      href="https://docs.google.com/forms/d/e/1FAIpQLSdnaTixbqudAQtLW9kk971NHRx2rfAjYjq5SrwV59T-Cq8U_Q/viewform?usp=header"
-     data-fr="Faire une demande / proposer un logement"
-     data-en="Submit a request / offer accommodation">
+     data-fr="Faire une demande / proposer un logement 🏠"
+     data-en="Submit a request / offer accommodation 🏠">
   </a>
 </header>
 
 <section id="siteContent" style="display:none">
-<h2 data-fr="Demandes et propositions de logement déjà en ligne"
-    data-en="Housing requests and offers already online"></h2>
+<h2 data-fr="Demandes et propositions de logement déjà en ligne 📝"
+    data-en="Housing requests and offers already online 📝"></h2>
 
 <div class="filters">
   <select id="categoryFilter">
@@ -110,7 +111,6 @@ header p{font-size:1.1em;color:#5b5b5b;}
 <div id="detail"></div>
 </section>
 
-<!-- ---------------- SCRIPTS ---------------- -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
 <script>
 // ---------------- LANG ----------------
