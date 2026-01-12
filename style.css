@@ -1,36 +1,28 @@
 /* ---------------- GLOBAL ---------------- */
 body{
-    font-family: 'Arial', sans-serif;
+    font-family:'Arial', sans-serif;
     margin:0;
     padding:0;
     background:#f5f7ff;
     color:#3b3b3b;
 }
 
-h1,h2,h3{
-    margin:0;
-}
-
-a{
-    text-decoration:none;
-}
-
 /* ---------------- HEADER ---------------- */
 header{
     text-align:center;
     padding:40px 20px 20px 20px;
-    background:#ffffff;
-    border-bottom: 1px solid #dcdcff;
+    background:#fff;
+    border-bottom:1px solid #dcdcff;
 }
 
 header h1{
     font-size:2em;
     font-weight:700;
+    margin-bottom:8px;
 }
 
 header p{
     font-size:1em;
-    margin-top:8px;
     margin-bottom:20px;
     color:#555;
 }
@@ -38,12 +30,13 @@ header p{
 .main-btn{
     display:inline-block;
     padding:12px 25px;
-    margin-top:15px;
-    border-radius:15px;
+    border-radius:25px; /* boutons ronds */
     background:#6c7cff;
     color:#fff;
     font-weight:600;
     font-size:1em;
+    margin-top:15px;
+    cursor:pointer;
 }
 
 .main-btn:hover{
@@ -59,7 +52,7 @@ header p{
     background:#c6ccff;
     color:#6c7cff;
     padding:6px 15px;
-    border-radius:12px;
+    border-radius:25px; /* boutons ronds */
     font-size:0.85em;
     margin:0 5px;
     cursor:pointer;
@@ -80,9 +73,12 @@ header p{
 
 .filters select{
     padding:8px 12px;
-    border-radius:12px;
+    border-radius:25px; /* arrondi comme bouton */
     border:1px solid #b8b8b8;
     font-size:0.95em;
+    appearance: none; /* masque flèche native */
+    background: #fff url("data:image/svg+xml;utf8,<svg fill='gray' height='10' viewBox='0 0 10 10' width='10' xmlns='http://www.w3.org/2000/svg'><polygon points='0,0 10,0 5,7'/></svg>") no-repeat right 10px center;
+    background-size: 10px;
 }
 
 /* ---------------- CARDS ---------------- */
@@ -95,11 +91,15 @@ header p{
 
 .card{
     background:#fff;
-    border-radius:20px;
-    padding:20px;
+    border-radius:25px;
+    padding:15px 20px;
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
     cursor:pointer;
     transition:transform 0.2s;
+    max-height:200px; /* limite la hauteur comme carte de visite */
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
 .card:hover{
@@ -107,12 +107,13 @@ header p{
 }
 
 .card h3{
-    font-size:1.2em;
-    margin-bottom:8px;
+    font-size:1.1em;
+    margin-bottom:6px;
 }
 
 .card p{
-    margin:5px 0;
+    margin:4px 0;
+    font-size:0.95em;
 }
 
 /* ---------------- DETAIL ---------------- */
@@ -132,7 +133,7 @@ header p{
 
 .back-btn{
     padding:8px 18px;
-    border-radius:12px;
+    border-radius:25px; /* rond */
     border:none;
     background:#6c7cff;
     color:#fff;
@@ -186,7 +187,7 @@ header p{
 .gate-card input{
     width:100%;
     padding:14px;
-    border-radius:12px;
+    border-radius:25px; /* rond */
     border:1px solid #b8b8b8;
     font-size:1em;
     margin-bottom:15px;
@@ -200,12 +201,12 @@ header p{
 #okBtn{
     padding:12px 25px;
     border:none;
-    border-radius:12px;
+    border-radius:25px; /* rond */
     background:#6c7cff;
     color:white;
     font-weight:600;
     font-size:1em;
-    margin-bottom:15px;
+    margin-bottom:20px;
     cursor:pointer;
 }
 
@@ -215,14 +216,14 @@ header p{
 
 .lang-inline{
     display:flex;
-    gap:10px;
-    margin-top:25px;
+    gap:12px;
+    margin-top:30px;
 }
 
 .lang-inline button{
     padding:5px 20px;
     font-size:0.85em;
-    border-radius:12px;
+    border-radius:25px; /* rond */
     border:2px solid #6c7cff;
     background:#c6ccff;
     color:#6c7cff;
