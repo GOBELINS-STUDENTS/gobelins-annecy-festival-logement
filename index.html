@@ -11,22 +11,25 @@
 <!-- ---------------- PORTE D'ACCES ---------------- -->
 <div id="gate">
   <div class="gate-card">
+    <!-- Texte de bienvenue -->
     <h2 data-fr="Bienvenue sur la plateforme de logement Festival Annecy – Réservée aux étudiants Gobelins"
         data-en="Welcome to the Annecy Festival Housing Platform – Reserved for Gobelins students"></h2>
     <p data-fr="Pour accéder au site, veuillez entrer votre adresse mail Gobelins"
        data-en="To access the site, please enter your Gobelins email"></p>
 
-    <div class="email-container">
-      <input type="email" id="gateEmail" placeholder="">
-      <button onclick="checkGate()" data-fr="OK" data-en="OK">OK</button>
-    </div>
+    <!-- Champ email -->
+    <input type="email" id="gateEmail" placeholder="">
 
-    <p id="gateError"></p>
+    <!-- Bouton OK -->
+    <button onclick="checkGate()" data-fr="OK" data-en="OK">OK</button>
 
-    <div class="lang-switch">
+    <!-- Boutons langue en dessous -->
+    <div class="lang-inline">
       <button onclick="setLang('fr')">FR</button>
       <button onclick="setLang('en')">EN</button>
     </div>
+
+    <p id="gateError"></p>
   </div>
 </div>
 
@@ -36,10 +39,6 @@
       data-en="Student Housing – Annecy Festival"></h1>
   <p data-fr="Plateforme solidaire entre étudiants Gobelins"
      data-en="A solidarity platform for Gobelins students"></p>
-  <div class="lang-switch">
-    <button onclick="setLang('fr')">FR</button>
-    <button onclick="setLang('en')">EN</button>
-  </div>
   <a class="main-btn"
      target="_blank"
      href="https://docs.google.com/forms/d/e/1FAIpQLSdnaTixbqudAQtLW9kk971NHRx2rfAjYjq5SrwV59T-Cq8U_Q/viewform?usp=header"
