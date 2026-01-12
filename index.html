@@ -62,8 +62,8 @@ function setLang(lang) {
   document.querySelectorAll("[data-fr]").forEach(el=>{
     el.textContent = el.dataset[lang];
   });
-  renderCards(allData); // re-render les cartes en nouvelle langue
-  renderFilters();      // re-render les filtres en nouvelle langue
+  renderFilters();
+  renderCards(allData);
 }
 document.addEventListener("DOMContentLoaded", ()=>{
   setLang("fr");
@@ -180,6 +180,8 @@ function openDetail(item){
   document.getElementById("cards").style.display="none";
   const detail = document.getElementById("detail");
   detail.style.display="block";
+
+  const gobelinsEmail = email(item); // <-- Fix du bug
 
   detail.innerHTML=`
     <button class="back-btn" onclick="renderCards(allData)">← Retour aux annonces</button>
