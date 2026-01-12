@@ -4,12 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gobelins Students – Logement Festival Annecy</title>
+<link rel="stylesheet" href="style.css">
 <style>
-/* ---------------- GENERAL ---------------- */
-body { margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7ff; color:#1c1c1c;}
-h1,h2,h3,p{margin:0;}
-button{font-family:inherit; cursor:pointer;}
-
 /* ---------------- PAGE MAIL ---------------- */
 #gate {position:fixed; inset:0; background:#e6ebff; display:flex; align-items:center; justify-content:center; text-align:center; z-index:9999;}
 .gate-card{background:#fff; padding:50px 35px; border-radius:25px; max-width:450px; width:90%; box-shadow:0 20px 40px rgba(0,0,0,0.08); display:flex; flex-direction:column; align-items:center;}
@@ -23,29 +19,6 @@ button{font-family:inherit; cursor:pointer;}
 .lang-inline button{padding:5px 20px; font-size:0.85em; border-radius:12px; border:2px solid #6c7cff; background:#c6ccff; color:#6c7cff;}
 .lang-inline button:hover{background:#aab8ff;}
 #gateError{color:#d33; font-weight:500; margin-top:12px;}
-
-/* ---------------- HEADER SITE ---------------- */
-header{ text-align:center; padding:50px 20px 20px 20px; background:#e6ebff; border-bottom-left-radius:25px; border-bottom-right-radius:25px;}
-header h1{font-size:2em;margin-bottom:10px;color:#3b3b3b;}
-header p{font-size:1.1em;color:#5b5b5b;}
-.main-btn{display:inline-block; margin-top:20px; padding:12px 30px; border-radius:12px; background:#6c7cff; color:white; font-weight:600; text-decoration:none;}
-.main-btn:hover{background:#5664e0; transform:translateY(-2px); transition:.2s;}
-
-/* ---------------- FILTERS ---------------- */
-.filters{display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin:25px 0;}
-.filters select{padding:10px 12px; border-radius:12px; border:1px solid #b8b8b8; font-size:1em; background:#fff;}
-.filters select:focus{outline:none; border-color:#6c7cff;}
-
-/* ---------------- CARDS ---------------- */
-#cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:20px; padding:0 20px 40px;}
-.card, .detail-card{background:#fff; padding:20px; border-radius:20px; box-shadow:0 8px 20px rgba(0,0,0,0.08); cursor:pointer; transition:.15s;}
-.card:hover, .detail-card:hover{transform:translateY(-2px); box-shadow:0 12px 25px rgba(0,0,0,0.12);}
-.card h3{font-size:1.2em; margin-bottom:8px; color:#3b3b3b;}
-.card p{margin:4px 0; color:#555555;}
-#detail{padding:20px;}
-.detail-card{max-width:600px; margin:20px auto;}
-.back-btn{padding:10px 20px; margin-bottom:15px; border:none; border-radius:12px; background:#6c7cff; color:white; font-weight:600;}
-.back-btn:hover{background:#5664e0; transform:translateY(-2px);}
 </style>
 </head>
 <body>
@@ -70,11 +43,16 @@ header p{font-size:1.1em;color:#5b5b5b;}
 </div>
 
 <!-- ---------------- SITE ---------------- -->
-<header id="mainContent" style="display:none">
+<div id="mainContent" style="display:none">
+<header>
   <h1 data-fr="Logement étudiant – Festival d’Annecy 🎨✨"
       data-en="Student Housing – Annecy Festival 🎨✨"></h1>
   <p data-fr="Plateforme solidaire entre étudiants Gobelins 💜"
      data-en="A solidarity platform for Gobelins students 💜"></p>
+  <div class="lang-switch">
+    <button onclick="setLang('fr')">FR</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
   <a class="main-btn"
      target="_blank"
      href="https://docs.google.com/forms/d/e/1FAIpQLSdnaTixbqudAQtLW9kk971NHRx2rfAjYjq5SrwV59T-Cq8U_Q/viewform?usp=header"
@@ -83,7 +61,7 @@ header p{font-size:1.1em;color:#5b5b5b;}
   </a>
 </header>
 
-<section id="siteContent" style="display:none">
+<section>
 <h2 data-fr="Demandes et propositions de logement déjà en ligne 📝"
     data-en="Housing requests and offers already online 📝"></h2>
 
@@ -93,12 +71,14 @@ header p{font-size:1.1em;color:#5b5b5b;}
     <option value="search" data-fr="Cherche" data-en="Looking"></option>
     <option value="offer" data-fr="Propose" data-en="Offering"></option>
   </select>
+
   <select id="placesFilter">
     <option value="" data-fr="Nombre de places" data-en="Number of places"></option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3+">3+</option>
   </select>
+
   <select id="langFilter">
     <option value="" data-fr="Langues parlées" data-en="Languages spoken"></option>
     <option value="fr">FR</option>
@@ -110,19 +90,21 @@ header p{font-size:1.1em;color:#5b5b5b;}
 <div id="cards"></div>
 <div id="detail"></div>
 </section>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
 <script>
-// ---------------- LANG ----------------
+/* ---------------- LANG ---------------- */
 let currentLang="fr";
 function setLang(lang){
   currentLang=lang;
   document.querySelectorAll("[data-fr]").forEach(el=>{
     el.textContent = el.dataset[lang] || el.dataset.fr;
   });
+  renderFilters();
+  renderCards(allData);
 }
 
-// ---------------- GATE ----------------
+/* ---------------- GATE ---------------- */
 function checkGate(){
   const emailInput=document.getElementById("gateEmail").value.trim();
   const error=document.getElementById("gateError");
@@ -137,78 +119,8 @@ function checkGate(){
 
 function showSite(){
   document.getElementById("mainContent").style.display="block";
-  document.getElementById("siteContent").style.display="block";
   loadData();
 }
 
-// ---------------- CHECK GATE ON LOAD ----------------
 window.addEventListener("DOMContentLoaded",()=>{
-  const saved=localStorage.getItem("gobelinsAccess");
-  if(saved && saved.endsWith("@edu.gobelins.fr")){
-    document.getElementById("gate").style.display="none";
-    showSite();
-  }
-  setLang('fr'); // force FR par défaut sur la page mail
-});
-
-// ---------------- TABLETOP.JS ----------------
-// Utiliser le CSV live pour que ça s'actualise comme avant
-const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGiEbWqhlooE6bsk2vdGqnzqANkK05DUnTEXAZivtV7ytazI-YqAQJK5F-_yMnSjYYDICIf6lO6nYX/pub?output=csv';
-
-function loadData(){
-  Tabletop.init({
-    key: publicSpreadsheetUrl,
-    simpleSheet: true,
-    parseNumbers: true,
-    callback: function(data, tabletop) {
-      renderCards(data);
-    }
-  });
-}
-
-// ---------------- RENDER CARDS ----------------
-function renderCards(data){
-  const container = document.getElementById("cards");
-  container.innerHTML = "";
-  data.forEach(item=>{
-    const card = document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <h3>${item.Prénom} ${item.NOM}</h3>
-      <p>${item.Catégorie}</p>
-      <p>${item["Nombre de places disponibles / recherchées"]}</p>
-      <p>${item["Dates de disponibilité / recherche"]}</p>
-      <p>${item["Adresse mail Gobelins"]}</p>
-    `;
-    card.onclick = ()=> showDetail(item);
-    container.appendChild(card);
-  });
-}
-
-// ---------------- DETAIL ----------------
-function showDetail(item){
-  const detail = document.getElementById("detail");
-  detail.innerHTML=`
-    <div class="detail-card">
-      <button class="back-btn" onclick="backCards()">← Retour</button>
-      <h3>${item.Prénom} ${item.NOM}</h3>
-      <p><strong>${item.Catégorie}</strong></p>
-      <p>Places: ${item["Nombre de places disponibles / recherchées"]}</p>
-      <p>Dates: ${item["Dates de disponibilité / recherche"]}</p>
-      <p>Langues: ${item["Langues parlées"]}</p>
-      <p>Genre: ${item["Genre"]}</p>
-      <p>Email Gobelins: ${item["Adresse mail Gobelins"]}</p>
-      <p>Contact: ${item["Contact (autre mail/insta/numéro)"]}</p>
-      <p>Commentaire: ${item["Commentaire / Précisions"]}</p>
-    </div>
-  `;
-  document.getElementById("cards").style.display="none";
-}
-
-function backCards(){
-  document.getElementById("detail").innerHTML="";
-  document.getElementById("cards").style.display="grid";
-}
-</script>
-</body>
-</html>
+  const saved=
