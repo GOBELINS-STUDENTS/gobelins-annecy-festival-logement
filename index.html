@@ -44,11 +44,12 @@
 
 <!-- ---------------- SITE ---------------- -->
 <div id="mainContent" style="display:none">
+
 <header>
-  <h1 data-fr="Logement étudiant – Festival d’Annecy 🎨✨"
-      data-en="Student Housing – Annecy Festival 🎨✨"></h1>
-  <p data-fr="Plateforme solidaire entre étudiants Gobelins 💜"
-     data-en="A solidarity platform for Gobelins students 💜"></p>
+  <h1 data-fr="Logement étudiant – Festival d’Annecy"
+      data-en="Student Housing – Annecy Festival"></h1>
+  <p data-fr="Plateforme solidaire entre étudiants Gobelins"
+     data-en="A solidarity platform for Gobelins students"></p>
   <div class="lang-switch">
     <button onclick="setLang('fr')">FR</button>
     <button onclick="setLang('en')">EN</button>
@@ -56,14 +57,14 @@
   <a class="main-btn"
      target="_blank"
      href="https://docs.google.com/forms/d/e/1FAIpQLSdnaTixbqudAQtLW9kk971NHRx2rfAjYjq5SrwV59T-Cq8U_Q/viewform?usp=header"
-     data-fr="Faire une demande / proposer un logement 🏠"
-     data-en="Submit a request / offer accommodation 🏠">
+     data-fr="Faire une demande / proposer un logement"
+     data-en="Submit a request / offer accommodation">
   </a>
 </header>
 
 <section>
-<h2 data-fr="Demandes et propositions de logement déjà en ligne 📝"
-    data-en="Housing requests and offers already online 📝"></h2>
+<h2 data-fr="Demandes et propositions de logement"
+    data-en="Housing requests and offers"></h2>
 
 <div class="filters">
   <select id="categoryFilter">
@@ -89,6 +90,7 @@
 
 <div id="cards"></div>
 <div id="detail"></div>
+
 </section>
 </div>
 
@@ -123,4 +125,157 @@ function showSite(){
 }
 
 window.addEventListener("DOMContentLoaded",()=>{
-  const saved=
+  const saved=localStorage.getItem("gobelinsAccess");
+  if(saved && saved.endsWith("@edu.gobelins.fr")){
+    document.getElementById("gate").style.display="none";
+    showSite();
+  }
+  setLang('fr'); // par défaut FR
+});
+
+/* ---------------- DATA ---------------- */
+const SHEET_URL = "https://opensheet.elk.sh/17cmcjMuD7BKdJskOvEYoPY2s7LnSVIENWeu2whUCJKY/Réponses%20au%20formulaire%201";
+let allData = [];
+
+function loadData(){
+  fetch(SHEET_URL)
+  .then(res=>res.json())
+  .then(data=>{
+    allData = data;
+    renderFilters();
+    renderCards(allData);
+  });
+}
+
+/* ---------------- HELPERS ---------------- */
+function email(item){ return item["Adresse mail Gobelins"] || item["Gobelin email"] || ""; }
+function category(item){
+  if(item.Catégorie?.toLowerCase().includes("cherche") || item.Category?.includes("Looking")) return "search";
+  if(item.Catégorie?.toLowerCase().includes("propose") || item.Category?.includes("Offering")) return "offer";
+  return "";
+}
+function getPlaces(item){
+  return item["Nombre de places disponibles / recherchées"] || item["Number of places available / needed"] || "-";
+}
+function getDates(item){
+  return item["Dates de disponibilité / recherche"] || item["Dates available"] || "-";
+}
+function getLangs(item){
+  return item["Langues parlées"] || item["Languages spoken"] || "-";
+}
+function parseLangs(item){
+  const raw = getLangs(item);
+  if(!raw) return [];
+  const l = raw.toLowerCase();
+  const langs = [];
+  if(l.includes("fr") || l.includes("français")) langs.push("fr");
+  if(l.includes("en") || l.includes("anglais")) langs.push("en");
+  return langs;
+}
+
+/* ---------------- FILTER ---------------- */
+function renderFilters(){
+  const categoryFilter = document.getElementById("categoryFilter");
+  const placesFilter = document.getElementById("placesFilter");
+  const langFilter = document.getElementById("langFilter");
+  [categoryFilter, placesFilter, langFilter].forEach(sel=>{
+    sel.querySelectorAll("option").forEach(opt=>{
+      if(opt.dataset[currentLang]) opt.textContent = opt.dataset[currentLang];
+    });
+  });
+}
+
+document.getElementById("categoryFilter").onchange =
+document.getElementById("placesFilter").onchange =
+document.getElementById("langFilter").onchange = () => {
+  applyFilters();
+};
+
+function applyFilters(){
+  const cat = document.getElementById("categoryFilter").value;
+  const places = document.getElementById("placesFilter").value;
+  const lang = document.getElementById("langFilter").value;
+
+  const filtered = allData.filter(item=>{
+    if(!email(item).endsWith("@edu.gobelins.fr")) return false;
+    let keep = true;
+
+    if(cat) keep = keep && category(item)===cat;
+
+    if(places){
+      const p = getPlaces(item);
+      if(places==="3+") keep = keep && p>=3;
+      else keep = keep && p==places;
+    }
+
+    if(lang){
+      const langs = parseLangs(item);
+      if(lang==="fr") keep = keep && langs.includes("fr");
+      if(lang==="en") keep = keep && langs.includes("en");
+      if(lang==="both") keep = keep && langs.includes("fr") && langs.includes("en");
+    }
+
+    return keep;
+  });
+
+  renderCards(filtered);
+}
+
+/* ---------------- CARDS ---------------- */
+function renderCards(data){
+  const container = document.getElementById("cards");
+  container.innerHTML = "";
+  document.getElementById("detail").style.display = "none";
+  container.style.display = "grid";
+
+  data.forEach(item=>{
+    const first = item.Prénom || item.Name || "";
+    const last = item.NOM || item.LASTNAME || "";
+    const typeLabel = category(item) === "search"
+      ? (currentLang==="fr"?"Cherche un logement":"Looking for accommodation")
+      : (currentLang==="fr"?"Propose un logement":"Offering accommodation");
+    const places = getPlaces(item);
+    const dates = getDates(item);
+    const gobelinsEmail = email(item);
+
+    const card = document.createElement("div");
+    card.className="card";
+    card.innerHTML = `
+      <h3>${first} ${last}</h3>
+      <p><strong>${typeLabel}</strong></p>
+      <p>🛏️ ${places}</p>
+      <p>📅 ${dates}</p>
+      <p>✉️ ${gobelinsEmail}</p>
+    `;
+
+    card.onclick = ()=> openDetail(item);
+    container.appendChild(card);
+  });
+}
+
+/* ---------------- DETAIL VIEW ---------------- */
+function openDetail(item){
+  document.getElementById("cards").style.display="none";
+  const detail = document.getElementById("detail");
+  detail.style.display="block";
+
+  const gobelinsEmail = email(item);
+
+  detail.innerHTML=`
+    <button class="back-btn" onclick="renderCards(allData)">← Retour aux annonces</button>
+    <div class="detail-card">
+      <h2>${item.Prénom || item.Name} ${item.NOM || item.LASTNAME}</h2>
+      <p><strong>Type :</strong> ${category(item)==="search" ? (currentLang==="fr"?"Cherche un logement":"Looking for accommodation") : (currentLang==="fr"?"Propose un logement":"Offering accommodation")}</p>
+      <p><strong>Genre :</strong> ${item.Genre || item.Gender || "-"}</p>
+      <p><strong>Langues :</strong> ${getLangs(item)}</p>
+      <p><strong>Dates :</strong> ${getDates(item)}</p>
+      <p><strong>Places :</strong> ${getPlaces(item)}</p>
+      <p><strong>Email :</strong> ${gobelinsEmail}</p>
+      <p><strong>Contact :</strong> ${item["Contact (autre mail/insta/numéro)"] || item["Contact (personnal email/instagram/phone number)"] || "-"}</p>
+      <p><strong>Commentaire :</strong> ${item["Commentaire / Précisions"] || item["Comment / details"] || "-"}</p>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
