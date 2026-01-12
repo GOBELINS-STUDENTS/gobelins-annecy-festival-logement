@@ -148,15 +148,18 @@ window.addEventListener("DOMContentLoaded",()=>{
     document.getElementById("gate").style.display="none";
     showSite();
   }
+  setLang('fr'); // force FR par défaut sur la page mail
 });
 
 // ---------------- TABLETOP.JS ----------------
-const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGiEbWqhlooE6bsk2vdGqnzqANkK05DUnTEXAZivtV7ytazI-YqAQJK5F-_yMnSjYYDICIf6lO6nYX/pubhtml';
+// Utiliser le CSV live pour que ça s'actualise comme avant
+const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGiEbWqhlooE6bsk2vdGqnzqANkK05DUnTEXAZivtV7ytazI-YqAQJK5F-_yMnSjYYDICIf6lO6nYX/pub?output=csv';
 
 function loadData(){
   Tabletop.init({
     key: publicSpreadsheetUrl,
     simpleSheet: true,
+    parseNumbers: true,
     callback: function(data, tabletop) {
       renderCards(data);
     }
