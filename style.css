@@ -10,32 +10,32 @@ body{
 /* ---------------- HEADER ---------------- */
 header{
     text-align:center;
-    padding:40px 20px 20px 20px;
+    padding:30px 20px 15px 20px; /* header légèrement plus bas */
     background:#fff;
     border-bottom:1px solid #dcdcff;
 }
 
 header h1{
-    font-size:2em;
+    font-size:1.9em;
     font-weight:700;
-    margin-bottom:8px;
+    margin-bottom:6px;
 }
 
 header p{
     font-size:1em;
-    margin-bottom:20px;
+    margin-bottom:15px;
     color:#555;
 }
 
 .main-btn{
     display:inline-block;
     padding:12px 25px;
-    border-radius:25px; /* boutons ronds */
+    border-radius:25px;
     background:#6c7cff;
     color:#fff;
     font-weight:600;
     font-size:1em;
-    margin-top:15px;
+    margin-top:25px; /* plus d’espace sous le bouton */
     cursor:pointer;
 }
 
@@ -52,7 +52,7 @@ header p{
     background:#c6ccff;
     color:#6c7cff;
     padding:6px 15px;
-    border-radius:25px; /* boutons ronds */
+    border-radius:25px;
     font-size:0.85em;
     margin:0 5px;
     cursor:pointer;
@@ -62,21 +62,30 @@ header p{
     background:#aab8ff;
 }
 
+/* ---------------- SECTION TITRE ---------------- */
+section h2{
+    text-align:center; /* centrer le titre */
+    margin-top:50px; /* espace depuis le bouton */
+    font-size:1.4em;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
 /* ---------------- FILTERS ---------------- */
 .filters{
     display:flex;
     justify-content:center;
     gap:15px;
     flex-wrap:wrap;
-    margin:25px 0;
+    margin:20px 0;
 }
 
 .filters select{
     padding:8px 12px;
-    border-radius:25px; /* arrondi comme bouton */
+    border-radius:25px;
     border:1px solid #b8b8b8;
     font-size:0.95em;
-    appearance: none; /* masque flèche native */
+    appearance: none;
     background: #fff url("data:image/svg+xml;utf8,<svg fill='gray' height='10' viewBox='0 0 10 10' width='10' xmlns='http://www.w3.org/2000/svg'><polygon points='0,0 10,0 5,7'/></svg>") no-repeat right 10px center;
     background-size: 10px;
 }
@@ -84,9 +93,10 @@ header p{
 /* ---------------- CARDS ---------------- */
 #cards{
     display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); /* limite largeur des cartes */
     gap:20px;
     padding:0 20px 50px 20px;
+    justify-content:center;
 }
 
 .card{
@@ -96,7 +106,7 @@ header p{
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
     cursor:pointer;
     transition:transform 0.2s;
-    max-height:200px; /* limite la hauteur comme carte de visite */
+    max-width:300px; /* largeur type carte de visite */
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -133,7 +143,7 @@ header p{
 
 .back-btn{
     padding:8px 18px;
-    border-radius:25px; /* rond */
+    border-radius:25px;
     border:none;
     background:#6c7cff;
     color:#fff;
@@ -187,10 +197,10 @@ header p{
 .gate-card input{
     width:100%;
     padding:14px;
-    border-radius:25px; /* rond */
+    border-radius:25px;
     border:1px solid #b8b8b8;
     font-size:1em;
-    margin-bottom:15px;
+    margin-bottom:10px;
 }
 
 .gate-card input:focus{
@@ -201,12 +211,12 @@ header p{
 #okBtn{
     padding:12px 25px;
     border:none;
-    border-radius:25px; /* rond */
+    border-radius:25px;
     background:#6c7cff;
     color:white;
     font-weight:600;
     font-size:1em;
-    margin-bottom:20px;
+    margin-bottom:25px; /* plus d’espace sous le bouton */
     cursor:pointer;
 }
 
@@ -217,13 +227,13 @@ header p{
 .lang-inline{
     display:flex;
     gap:12px;
-    margin-top:30px;
+    margin-top:15px; /* plus petit que espace bouton ok */
 }
 
 .lang-inline button{
     padding:5px 20px;
     font-size:0.85em;
-    border-radius:25px; /* rond */
+    border-radius:25px;
     border:2px solid #6c7cff;
     background:#c6ccff;
     color:#6c7cff;
