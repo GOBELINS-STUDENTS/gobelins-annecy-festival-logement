@@ -1,13 +1,12 @@
-<style>
 :root {
-  --bg-main: #fefefe;
-  --bg-soft: #f3f7ff;
-  --primary: #5b7cfa;
-  --secondary: #f5b7b1;
-  --text-main: #1f2937;
-  --text-soft: #6b7280;
-  --card-bg: #ffffff;
-  --radius: 18px;
+  --primary: #6c7cff;
+  --secondary: #ffb703;
+  --background: #f9fbff;
+  --card: #ffffff;
+  --soft: #eef2ff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --radius: 22px;
 }
 
 * {
@@ -16,143 +15,155 @@
 
 body {
   margin: 0;
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg-main);
-  color: var(--text-main);
-  line-height: 1.6;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--background);
+  color: var(--text);
 }
 
-/* ---------- HEADER ---------- */
+/* HEADER */
 
 header {
-  background: linear-gradient(180deg, var(--bg-soft), #ffffff);
   text-align: center;
-  padding: 4rem 1.5rem 3rem;
+  padding: 4rem 1.5rem 3.5rem;
+  background: linear-gradient(180deg, var(--soft), var(--background));
 }
 
 h1 {
-  font-size: 2.2rem;
-  margin-bottom: 0.6rem;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: .6rem;
 }
 
 header p {
-  font-size: 1.05rem;
-  color: var(--text-soft);
-  max-width: 520px;
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 540px;
   margin: 0 auto;
 }
 
-/* ---------- LANG SWITCH ---------- */
+/* LANGUAGE */
 
 .lang-switch {
   margin-top: 1.5rem;
 }
 
 .lang-switch button {
-  background: transparent;
+  background: white;
   border: 1px solid var(--primary);
   color: var(--primary);
+  padding: .55rem 1.2rem;
   border-radius: 999px;
-  padding: 0.4rem 0.9rem;
-  margin: 0 0.2rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.lang-switch button:hover {
-  background: var(--primary);
-  color: white;
-}
-
-/* ---------- MAIN BUTTON ---------- */
-
-.main-button {
-  display: inline-block;
-  margin-top: 3rem;
-  padding: 1rem 2.4rem;
-  background: var(--primary);
-  color: white;
-  text-decoration: none;
-  border-radius: 999px;
-  font-size: 1.05rem;
   font-weight: 500;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 10px 25px rgba(91, 124, 250, 0.25);
+  margin: 0 .25rem;
 }
 
-.main-button:hover {
+/* MAIN BUTTON */
+
+.main-btn {
+  display: inline-block;
+  margin-top: 2.2rem;
+  padding: .9rem 1.8rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(108,124,255,.25);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.main-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(91, 124, 250, 0.35);
+  box-shadow: 0 16px 36px rgba(108,124,255,.35);
 }
 
-/* ---------- SECTION ---------- */
+/* SECTION */
 
 section {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
-  padding: 3rem 1.5rem;
+  padding: 3.5rem 1.5rem;
 }
 
-/* ---------- FILTERS ---------- */
+section h2 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+/* FILTERS */
 
 .filters {
   display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: .8rem;
+  flex-wrap: wrap;
   margin-bottom: 2.5rem;
 }
 
 select {
-  appearance: none;
-  padding: 0.7rem 1.2rem;
+  padding: .6rem 1.4rem;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #dbe2ff;
   background: white;
-  font-size: 0.95rem;
-  cursor: pointer;
-  color: var(--text-main);
+  font-size: .9rem;
 }
 
-select:focus {
-  outline: none;
-  border-color: var(--primary);
-}
+/* CARDS */
 
-/* ---------- CARDS ---------- */
+#cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.4rem;
+}
 
 .card {
-  background: var(--card-bg);
+  background: var(--card);
   border-radius: var(--radius);
-  padding: 1.4rem 1.6rem;
-  margin-bottom: 1.2rem;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-  transition: transform 0.15s ease;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+  cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(0,0,0,.1);
 }
 
 .card h3 {
-  margin-top: 0;
-  margin-bottom: 0.6rem;
-  font-size: 1.1rem;
+  margin: 0 0 .4rem;
 }
 
 .card p {
-  margin: 0.3rem 0;
-  color: var(--text-soft);
-  font-size: 0.95rem;
+  margin: .3rem 0;
+  font-size: .9rem;
+  color: var(--muted);
 }
 
-/* ---------- FOOTER ---------- */
+/* DETAIL VIEW */
 
-footer {
-  text-align: center;
-  padding: 2rem 1rem 3rem;
-  font-size: 0.8rem;
-  color: var(--text-soft);
+#detail {
+  display: none;
 }
-</style>
+
+.detail-card {
+  max-width: 680px;
+  margin: auto;
+  background: white;
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: 0 25px 60px rgba(0,0,0,.12);
+}
+
+.back-btn {
+  margin-bottom: 1.5rem;
+  background: white;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: .6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.detail-card p {
+  margin: .6rem 0;
+}
