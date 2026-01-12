@@ -8,7 +8,27 @@
 </head>
 <body>
 
-<header>
+<!-- ---------------- PORTE D'ACCES ---------------- -->
+<div id="gate">
+  <div class="gate-card">
+    <h2 data-fr="Bienvenue sur la plateforme de logement Festival Annecy – Réservée aux étudiants Gobelins"
+        data-en="Welcome to the Annecy Festival Housing Platform – Reserved for Gobelins students"></h2>
+    <p data-fr="Veuillez entrer votre adresse mail Gobelins"
+       data-en="Please enter your Gobelins email"></p>
+    <input type="email" id="gateEmail" placeholder="prenom.nom@edu.gobelins.fr">
+    <button onclick="checkGate()"
+        data-fr="Entrer"
+        data-en="Enter"></button>
+    <p id="gateError"></p>
+    <div class="lang-switch">
+      <button onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------- HEADER SITE ---------------- -->
+<header id="mainContent" style="display:none">
   <h1 data-fr="Logement étudiant – Festival d’Annecy"
       data-en="Student Housing – Annecy Festival"></h1>
   <p data-fr="Plateforme solidaire entre étudiants Gobelins"
@@ -25,7 +45,7 @@
   </a>
 </header>
 
-<section>
+<section id="siteContent" style="display:none">
 <h2 data-fr="Demandes et propositions de logement déjà en ligne"
     data-en="Housing requests and offers already online"></h2>
 
@@ -53,6 +73,7 @@
 
 <div id="cards"></div>
 <div id="detail"></div>
+</section>
 
 <script>
 /* ---------------- LANGUE ---------------- */
@@ -62,11 +83,36 @@ function setLang(lang) {
   document.querySelectorAll("[data-fr]").forEach(el=>{
     el.textContent = el.dataset[lang];
   });
-  renderFilters();
-  renderCards(allData);
 }
-document.addEventListener("DOMContentLoaded", ()=>{
-  setLang("fr");
+
+/* ---------------- PORTE D'ACCES ---------------- */
+function checkGate(){
+  const emailInput = document.getElementById("gateEmail").value.trim();
+  const error = document.getElementById("gateError");
+
+  if(!emailInput.endsWith("@edu.gobelins.fr")){
+    error.textContent = currentLang==="fr" ? "Adresse Gobelins invalide" : "Invalid Gobelins email";
+    error.style.color = "#d33";
+    return;
+  }
+
+  localStorage.setItem("gobelinsAccess", emailInput);
+  document.getElementById("gate").style.display = "none";
+  showSite();
+}
+
+function showSite(){
+  document.getElementById("mainContent").style.display = "block";
+  document.getElementById("siteContent").style.display = "block";
+}
+
+/* Vérifier si déjà validé */
+window.addEventListener("DOMContentLoaded", ()=>{
+  const saved = localStorage.getItem("gobelinsAccess");
+  if(saved && saved.endsWith("@edu.gobelins.fr")){
+    document.getElementById("gate").style.display = "none";
+    showSite();
+  }
 });
 
 /* ---------------- DATA ---------------- */
@@ -97,8 +143,6 @@ function getDates(item){
 function getLangs(item){
   return item["Langues parlées"] || item["Languages spoken"] || "-";
 }
-
-/* ---------------- PARSE LANGS POUR FILTRE ---------------- */
 function parseLangs(item){
   const raw = getLangs(item);
   if(!raw) return [];
@@ -114,7 +158,6 @@ function renderFilters(){
   const categoryFilter = document.getElementById("categoryFilter");
   const placesFilter = document.getElementById("placesFilter");
   const langFilter = document.getElementById("langFilter");
-
   [categoryFilter, placesFilter, langFilter].forEach(sel=>{
     sel.querySelectorAll("option").forEach(opt=>{
       if(opt.dataset[currentLang]) opt.textContent = opt.dataset[currentLang];
@@ -136,25 +179,18 @@ function applyFilters(){
   const filtered = allData.filter(item=>{
     if(!email(item).endsWith("@edu.gobelins.fr")) return false;
     let keep = true;
-
-    // Catégorie
     if(cat) keep = keep && category(item)===cat;
-
-    // Nombre de places
     if(places){
       const p = getPlaces(item);
       if(places==="3+") keep = keep && p>=3;
       else keep = keep && p==places;
     }
-
-    // Langues parlées
     if(lang){
       const langs = parseLangs(item);
       if(lang==="fr") keep = keep && langs.includes("fr");
       if(lang==="en") keep = keep && langs.includes("en");
       if(lang==="both") keep = keep && langs.includes("fr") && langs.includes("en");
     }
-
     return keep;
   });
 
@@ -187,7 +223,6 @@ function renderCards(data){
       <p>📅 ${dates}</p>
       <p>✉️ ${gobelinsEmail}</p>
     `;
-
     card.onclick = ()=> openDetail(item);
     container.appendChild(card);
   });
@@ -199,7 +234,7 @@ function openDetail(item){
   const detail = document.getElementById("detail");
   detail.style.display="block";
 
-  const gobelinsEmail = email(item); // <-- Fix du bug
+  const gobelinsEmail = email(item);
 
   detail.innerHTML=`
     <button class="back-btn" onclick="renderCards(allData)">← Retour aux annonces</button>
