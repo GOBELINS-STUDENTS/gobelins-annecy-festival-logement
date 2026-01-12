@@ -13,13 +13,16 @@
   <div class="gate-card">
     <h2 data-fr="Bienvenue sur la plateforme de logement Festival Annecy – Réservée aux étudiants Gobelins"
         data-en="Welcome to the Annecy Festival Housing Platform – Reserved for Gobelins students"></h2>
-    <p data-fr="Veuillez entrer votre adresse mail Gobelins"
-       data-en="Please enter your Gobelins email"></p>
-    <input type="email" id="gateEmail" placeholder="prenom.nom@edu.gobelins.fr">
-    <button onclick="checkGate()"
-        data-fr="Entrer"
-        data-en="Enter"></button>
+    <p data-fr="Pour accéder au site, veuillez entrer votre adresse mail Gobelins"
+       data-en="To access the site, please enter your Gobelins email"></p>
+
+    <div class="email-container">
+      <input type="email" id="gateEmail" placeholder="">
+      <button onclick="checkGate()" data-fr="OK" data-en="OK">OK</button>
+    </div>
+
     <p id="gateError"></p>
+
     <div class="lang-switch">
       <button onclick="setLang('fr')">FR</button>
       <button onclick="setLang('en')">EN</button>
