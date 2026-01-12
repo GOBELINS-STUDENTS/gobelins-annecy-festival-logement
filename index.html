@@ -98,6 +98,17 @@ function getLangs(item){
   return item["Langues parlées"] || item["Languages spoken"] || "-";
 }
 
+/* ---------------- PARSE LANGS POUR FILTRE ---------------- */
+function parseLangs(item){
+  const raw = getLangs(item);
+  if(!raw) return [];
+  const l = raw.toLowerCase();
+  const langs = [];
+  if(l.includes("fr") || l.includes("français")) langs.push("fr");
+  if(l.includes("en") || l.includes("anglais")) langs.push("en");
+  return langs;
+}
+
 /* ---------------- FILTER ---------------- */
 function renderFilters(){
   const categoryFilter = document.getElementById("categoryFilter");
@@ -125,18 +136,25 @@ function applyFilters(){
   const filtered = allData.filter(item=>{
     if(!email(item).endsWith("@edu.gobelins.fr")) return false;
     let keep = true;
+
+    // Catégorie
     if(cat) keep = keep && category(item)===cat;
+
+    // Nombre de places
     if(places){
       const p = getPlaces(item);
       if(places==="3+") keep = keep && p>=3;
       else keep = keep && p==places;
     }
+
+    // Langues parlées
     if(lang){
-      const l = getLangs(item).toLowerCase();
-      if(lang==="fr") keep = keep && l.includes("fr");
-      if(lang==="en") keep = keep && l.includes("en");
-      if(lang==="both") keep = keep && l.includes("fr") && l.includes("en");
+      const langs = parseLangs(item);
+      if(lang==="fr") keep = keep && langs.includes("fr");
+      if(lang==="en") keep = keep && langs.includes("en");
+      if(lang==="both") keep = keep && langs.includes("fr") && langs.includes("en");
     }
+
     return keep;
   });
 
