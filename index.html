@@ -6,6 +6,23 @@
 <title>Gobelin Students – Logement Festival Annecy</title>
 <link rel="stylesheet" href="style.css">
 <style>
+/* ---------------- GENERAL ---------------- */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f7ff;
+  color: #1c1c1c;
+}
+
+h1,h2,h3,p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
 /* ---------------- PORTE D'ACCES ---------------- */
 #gate {
   position: fixed;
@@ -14,13 +31,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
   text-align: center;
+  z-index: 9999;
 }
 
 .gate-card {
   background: #ffffff;
-  padding: 40px 30px;
+  padding: 50px 35px;
   border-radius: 25px;
   max-width: 450px;
   width: 90%;
@@ -30,17 +47,33 @@
   align-items: center;
 }
 
-.gate-card h2, .gate-card p {
-  margin-bottom: 20px;
+.gate-card h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #3b3b3b;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.gate-card p {
+  font-size: 1em;
+  color: #5b5b5b;
+  margin-bottom: 25px;
 }
 
 .gate-card input {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #b8b8b8;
   font-size: 1em;
-  margin-bottom: 10px; /* petit espace avec OK */
+  margin-bottom: 15px;
+  transition: border 0.2s;
+}
+
+.gate-card input:focus {
+  outline: none;
+  border-color: #6c7cff;
 }
 
 #okBtn {
@@ -51,62 +84,55 @@
   color: white;
   font-weight: 600;
   font-size: 1em;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  margin-bottom: 25px; /* espace avant FR/EN */
+  margin-bottom: 35px;
 }
 
-#okBtn:hover {
-  background: #5664e0;
-}
+#okBtn:hover { background: #5664e0; }
 
-/* Langues FR / EN en dessous */
 .lang-inline {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .lang-inline button {
-  padding: 5px 15px;
-  font-size: 0.8em;
-  border-radius: 8px;
-  border: 2px solid #6c7cff; /* même couleur que OK */
-  background: #c6ccff; /* plus clair que OK */
-  color: #6c7cff;       /* même couleur que OK */
-  cursor: pointer;
-  transition: background 0.2s ease;
+  padding: 5px 20px;
+  font-size: 0.85em;
+  border-radius: 12px;
+  border: 2px solid #6c7cff;
+  background: #c6ccff;
+  color: #6c7cff;
+  transition: background 0.2s;
 }
 
-.lang-inline button:hover {
-  background: #aab8ff;
-}
+.lang-inline button:hover { background: #aab8ff; }
 
-#gateError {
-  color: #d33;
-  font-weight: 500;
-  margin-top: 10px;
-}
+#gateError { color: #d33; font-weight: 500; margin-top: 12px; }
 
 /* ---------------- HEADER SITE ---------------- */
 header {
   text-align: center;
-  padding: 40px 20px;
+  padding: 50px 20px 20px 20px;
+  background: #e6ebff;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
+
+header h1 { font-size: 2em; margin-bottom: 10px; color: #3b3b3b; }
+header p { font-size: 1.1em; color: #5b5b5b; }
 
 .main-btn {
   display: inline-block;
   margin-top: 20px;
-  padding: 12px 25px;
+  padding: 12px 30px;
   border-radius: 12px;
   background: #6c7cff;
   color: white;
   font-weight: 600;
   text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
 }
 
-.main-btn:hover {
-  background: #5664e0;
-}
+.main-btn:hover { background: #5664e0; transform: translateY(-2px); }
 
 /* ---------------- FILTERS ---------------- */
 .filters {
@@ -114,8 +140,18 @@ header {
   justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin: 25px 0;
 }
+
+.filters select {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #b8b8b8;
+  font-size: 1em;
+  background: #ffffff;
+}
+
+.filters select:focus { outline: none; border-color: #6c7cff; }
 
 /* ---------------- CARDS ---------------- */
 #cards {
@@ -126,18 +162,25 @@ header {
 }
 
 .card, .detail-card {
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.detail-card {
-  max-width: 600px;
-  margin: 20px auto;
+.card:hover, .detail-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
 }
 
+.card h3 { font-size: 1.2em; margin-bottom: 8px; color: #3b3b3b; }
+.card p { margin: 4px 0; color: #555555; }
+
+/* ---------------- DETAIL ---------------- */
+#detail { padding: 20px; }
+.detail-card { max-width: 600px; margin: 20px auto; }
 .back-btn {
   padding: 10px 20px;
   margin-bottom: 15px;
@@ -146,30 +189,30 @@ header {
   background: #6c7cff;
   color: white;
   font-weight: 600;
-  cursor: pointer;
 }
-.back-btn:hover {
-  background: #5664e0;
-}
+.back-btn:hover { background: #5664e0; transform: translateY(-2px); }
 </style>
 </head>
+
 <body>
 
-<!-- ---------------- PORTE D'ACCES ---------------- -->
+<!-- ---------------- GATE ---------------- -->
 <div id="gate">
   <div class="gate-card">
-    <h2 id="welcomeText">Bienvenue sur la plateforme de logement Festival Annecy – Réservée aux étudiants Gobelins</h2>
-    <p id="instructionText">Pour accéder au site, veuillez entrer votre adresse mail Gobelins</p>
+    <h2 id="welcomeText" data-fr="Bienvenue sur la plateforme de logement Festival Annecy – Réservée aux étudiants Gobelins"
+                    data-en="Welcome to the Annecy Festival Student Housing Platform – Gobelins students only">
+    </h2>
+    <p id="instructionText" data-fr="Pour accéder au site, veuillez entrer votre adresse mail Gobelins"
+                            data-en="To access the site, please enter your Gobelins email">
+    </p>
 
     <input type="email" id="gateEmail" placeholder="">
-
     <button id="okBtn" onclick="checkGate()">OK</button>
 
     <div class="lang-inline">
       <button onclick="setLang('fr')">FR</button>
       <button onclick="setLang('en')">EN</button>
     </div>
-
     <p id="gateError"></p>
   </div>
 </div>
@@ -219,21 +262,21 @@ header {
 </section>
 
 <script>
-let currentLang = "fr";
+// ---------------- LANG ----------------
+let currentLang="fr";
 function setLang(lang){
-  currentLang = lang;
+  currentLang=lang;
   document.querySelectorAll("[data-fr]").forEach(el=>{
-    if(el.dataset[lang]) el.textContent = el.dataset[lang];
+    el.textContent = el.dataset[lang] || el.dataset.fr;
   });
 }
 
-/* ---------------- PORTE D'ACCES ---------------- */
+// ---------------- GATE ----------------
 function checkGate(){
-  const emailInput = document.getElementById("gateEmail").value.trim();
-  const error = document.getElementById("gateError");
+  const emailInput=document.getElementById("gateEmail").value.trim();
+  const error=document.getElementById("gateError");
   if(!emailInput.endsWith("@edu.gobelins.fr")){
     error.textContent = currentLang==="fr"?"Adresse Gobelins invalide":"Invalid Gobelins email";
-    error.style.color="#d33";
     return;
   }
   localStorage.setItem("gobelinsAccess", emailInput);
@@ -246,137 +289,13 @@ function showSite(){
   document.getElementById("siteContent").style.display="block";
 }
 
-window.addEventListener("DOMContentLoaded", ()=>{
-  const saved = localStorage.getItem("gobelinsAccess");
+window.addEventListener("DOMContentLoaded",()=>{
+  const saved=localStorage.getItem("gobelinsAccess");
   if(saved && saved.endsWith("@edu.gobelins.fr")){
     document.getElementById("gate").style.display="none";
     showSite();
   }
 });
-
-/* ---------------- DATA ---------------- */
-const SHEET_URL="https://opensheet.elk.sh/17cmcjMuD7BKdJskOvEYoPY2s7LnSVIENWeu2whUCJKY/Réponses%20au%20formulaire%201";
-let allData=[];
-fetch(SHEET_URL)
-  .then(res=>res.json())
-  .then(data=>{
-    allData=data;
-    renderFilters();
-    renderCards(allData);
-  });
-
-function email(item){ return item["Adresse mail Gobelins"] || item["Gobelin email"] || ""; }
-function category(item){
-  if(item.Catégorie?.toLowerCase().includes("cherche") || item.Category?.includes("Looking")) return "search";
-  if(item.Catégorie?.toLowerCase().includes("propose") || item.Category?.includes("Offering")) return "offer";
-  return "";
-}
-function getPlaces(item){ return item["Nombre de places disponibles / recherchées"] || item["Number of places available / needed"] || "-"; }
-function getDates(item){ return item["Dates de disponibilité / recherche"] || item["Dates available"] || "-"; }
-function getLangs(item){ return item["Langues parlées"] || item["Languages spoken"] || "-"; }
-function parseLangs(item){
-  const raw=getLangs(item);
-  if(!raw) return [];
-  const l=raw.toLowerCase();
-  const langs=[];
-  if(l.includes("fr")||l.includes("français")) langs.push("fr");
-  if(l.includes("en")||l.includes("anglais")) langs.push("en");
-  return langs;
-}
-
-/* ---------------- FILTER ---------------- */
-function renderFilters(){
-  const categoryFilter=document.getElementById("categoryFilter");
-  const placesFilter=document.getElementById("placesFilter");
-  const langFilter=document.getElementById("langFilter");
-  [categoryFilter,placesFilter,langFilter].forEach(sel=>{
-    sel.querySelectorAll("option").forEach(opt=>{
-      if(opt.dataset[currentLang]) opt.textContent=opt.dataset[currentLang];
-    });
-  });
-}
-
-document.getElementById("categoryFilter").onchange=
-document.getElementById("placesFilter").onchange=
-document.getElementById("langFilter").onchange=()=>{ applyFilters(); };
-
-function applyFilters(){
-  const cat=document.getElementById("categoryFilter").value;
-  const places=document.getElementById("placesFilter").value;
-  const lang=document.getElementById("langFilter").value;
-
-  const filtered=allData.filter(item=>{
-    if(!email(item).endsWith("@edu.gobelins.fr")) return false;
-    let keep=true;
-    if(cat) keep=keep && category(item)===cat;
-    if(places){
-      const p=getPlaces(item);
-      if(places==="3+") keep=keep && p>=3;
-      else keep=keep && p==places;
-    }
-    if(lang){
-      const langs=parseLangs(item);
-      if(lang==="fr") keep=keep && langs.includes("fr");
-      if(lang==="en") keep=keep && langs.includes("en");
-      if(lang==="both") keep=keep && langs.includes("fr") && langs.includes("en");
-    }
-    return keep;
-  });
-
-  renderCards(filtered);
-}
-
-/* ---------------- CARDS ---------------- */
-function renderCards(data){
-  const container=document.getElementById("cards");
-  container.innerHTML="";
-  document.getElementById("detail").style.display="none";
-  container.style.display="grid";
-
-  data.forEach(item=>{
-    const first=item.Prénom||item.Name||"";
-    const last=item.NOM||item.LASTNAME||"";
-    const typeLabel=category(item)==="search" ? (currentLang==="fr"?"Cherche un logement":"Looking for accommodation") : (currentLang==="fr"?"Propose un logement":"Offering accommodation");
-    const places=getPlaces(item);
-    const dates=getDates(item);
-    const gobelinsEmail=email(item);
-
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <h3>${first} ${last}</h3>
-      <p><strong>${typeLabel}</strong></p>
-      <p>🛏️ ${places}</p>
-      <p>📅 ${dates}</p>
-      <p>✉️ ${gobelinsEmail}</p>
-    `;
-    card.onclick=()=>openDetail(item);
-    container.appendChild(card);
-  });
-}
-
-/* ---------------- DETAIL VIEW ---------------- */
-function openDetail(item){
-  document.getElementById("cards").style.display="none";
-  const detail=document.getElementById("detail");
-  detail.style.display="block";
-  const gobelinsEmail=email(item);
-
-  detail.innerHTML=`
-    <button class="back-btn" onclick="renderCards(allData)">← Retour aux annonces</button>
-    <div class="detail-card">
-      <h2>${item.Prénom || item.Name} ${item.NOM || item.LASTNAME}</h2>
-      <p><strong>Type :</strong> ${category(item)==="search" ? (currentLang==="fr"?"Cherche un logement":"Looking for accommodation") : (currentLang==="fr"?"Propose un logement":"Offering accommodation")}</p>
-      <p><strong>Genre :</strong> ${item.Genre || item.Gender || "-"}</p>
-      <p><strong>Langues :</strong> ${getLangs(item)}</p>
-      <p><strong>Dates :</strong> ${getDates(item)}</p>
-      <p><strong>Places :</strong> ${getPlaces(item)}</p>
-      <p><strong>Email :</strong> ${gobelinsEmail}</p>
-      <p><strong>Contact :</strong> ${item["Contact (autre mail/insta/numéro)"] || item["Contact (personnal email/instagram/phone number)"] || "-"}</p>
-      <p><strong>Commentaire :</strong> ${item["Commentaire / Précisions"] || item["Comment / details"] || "-"}</p>
-    </div>
-  `;
-}
 </script>
 </body>
 </html>
