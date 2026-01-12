@@ -3,47 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gobelins Students – Logement Festival Annecy</title>
+<title>Gobelin Students – Logement Festival Annecy</title>
 <link rel="stylesheet" href="style.css">
-<style>
-/* ---------------- PAGE MAIL ---------------- */
-#gate {position:fixed; inset:0; background:#e6ebff; display:flex; align-items:center; justify-content:center; text-align:center; z-index:9999;}
-.gate-card{background:#fff; padding:50px 35px; border-radius:25px; max-width:450px; width:90%; box-shadow:0 20px 40px rgba(0,0,0,0.08); display:flex; flex-direction:column; align-items:center;}
-.gate-card h2{font-size:1.5em;font-weight:700;color:#3b3b3b;margin-bottom:15px;line-height:1.3;}
-.gate-card p{font-size:1em;color:#5b5b5b;margin-bottom:25px;}
-.gate-card input{width:100%; padding:14px; border-radius:12px; border:1px solid #b8b8b8; font-size:1em; margin-bottom:15px;}
-.gate-card input:focus{outline:none;border-color:#6c7cff;}
-#okBtn{padding:12px 25px; border:none; border-radius:12px; background:#6c7cff;color:white;font-weight:600;font-size:1em;margin-bottom:15px;}
-#okBtn:hover{background:#5664e0;}
-.lang-inline{display:flex; gap:12px; margin-top:25px;}
-.lang-inline button{padding:5px 20px; font-size:0.85em; border-radius:12px; border:2px solid #6c7cff; background:#c6ccff; color:#6c7cff;}
-.lang-inline button:hover{background:#aab8ff;}
-#gateError{color:#d33; font-weight:500; margin-top:12px;}
-</style>
 </head>
 <body>
-
-<!-- ---------------- PAGE MAIL ---------------- -->
-<div id="gate">
-  <div class="gate-card">
-    <h2 id="welcomeText" data-fr="Bienvenue sur la plateforme de logement Festival Annecy – Réservée aux étudiants Gobelins"
-                    data-en="Welcome to the Annecy Festival Student Housing Platform – Gobelins students only">
-    </h2>
-    <p id="instructionText" data-fr="Pour accéder au site, veuillez entrer votre adresse mail Gobelins"
-                            data-en="To access the site, please enter your Gobelins email">
-    </p>
-    <input type="email" id="gateEmail" placeholder="">
-    <button id="okBtn" onclick="checkGate()">OK</button>
-    <div class="lang-inline">
-      <button onclick="setLang('fr')">FR</button>
-      <button onclick="setLang('en')">EN</button>
-    </div>
-    <p id="gateError"></p>
-  </div>
-</div>
-
-<!-- ---------------- SITE ---------------- -->
-<div id="mainContent" style="display:none">
 
 <header>
   <h1 data-fr="Logement étudiant – Festival d’Annecy"
@@ -63,8 +26,8 @@
 </header>
 
 <section>
-<h2 data-fr="Demandes et propositions de logement"
-    data-en="Housing requests and offers"></h2>
+<h2 data-fr="Demandes et propositions de logement déjà en ligne"
+    data-en="Housing requests and offers already online"></h2>
 
 <div class="filters">
   <select id="categoryFilter">
@@ -91,61 +54,32 @@
 <div id="cards"></div>
 <div id="detail"></div>
 
-</section>
-</div>
-
 <script>
-/* ---------------- LANG ---------------- */
-let currentLang="fr";
-function setLang(lang){
-  currentLang=lang;
+/* ---------------- LANGUE ---------------- */
+let currentLang = "fr";
+function setLang(lang) {
+  currentLang = lang;
   document.querySelectorAll("[data-fr]").forEach(el=>{
-    el.textContent = el.dataset[lang] || el.dataset.fr;
+    el.textContent = el.dataset[lang];
   });
   renderFilters();
   renderCards(allData);
 }
-
-/* ---------------- GATE ---------------- */
-function checkGate(){
-  const emailInput=document.getElementById("gateEmail").value.trim();
-  const error=document.getElementById("gateError");
-  if(!emailInput.endsWith("@edu.gobelins.fr")){
-    error.textContent = currentLang==="fr"?"Adresse Gobelins invalide":"Invalid Gobelins email";
-    return;
-  }
-  localStorage.setItem("gobelinsAccess", emailInput);
-  document.getElementById("gate").style.display="none";
-  showSite();
-}
-
-function showSite(){
-  document.getElementById("mainContent").style.display="block";
-  loadData();
-}
-
-window.addEventListener("DOMContentLoaded",()=>{
-  const saved=localStorage.getItem("gobelinsAccess");
-  if(saved && saved.endsWith("@edu.gobelins.fr")){
-    document.getElementById("gate").style.display="none";
-    showSite();
-  }
-  setLang('fr'); // par défaut FR
+document.addEventListener("DOMContentLoaded", ()=>{
+  setLang("fr");
 });
 
 /* ---------------- DATA ---------------- */
 const SHEET_URL = "https://opensheet.elk.sh/17cmcjMuD7BKdJskOvEYoPY2s7LnSVIENWeu2whUCJKY/Réponses%20au%20formulaire%201";
 let allData = [];
 
-function loadData(){
-  fetch(SHEET_URL)
+fetch(SHEET_URL)
   .then(res=>res.json())
   .then(data=>{
     allData = data;
     renderFilters();
     renderCards(allData);
   });
-}
 
 /* ---------------- HELPERS ---------------- */
 function email(item){ return item["Adresse mail Gobelins"] || item["Gobelin email"] || ""; }
@@ -163,6 +97,8 @@ function getDates(item){
 function getLangs(item){
   return item["Langues parlées"] || item["Languages spoken"] || "-";
 }
+
+/* ---------------- PARSE LANGS POUR FILTRE ---------------- */
 function parseLangs(item){
   const raw = getLangs(item);
   if(!raw) return [];
@@ -178,6 +114,7 @@ function renderFilters(){
   const categoryFilter = document.getElementById("categoryFilter");
   const placesFilter = document.getElementById("placesFilter");
   const langFilter = document.getElementById("langFilter");
+
   [categoryFilter, placesFilter, langFilter].forEach(sel=>{
     sel.querySelectorAll("option").forEach(opt=>{
       if(opt.dataset[currentLang]) opt.textContent = opt.dataset[currentLang];
@@ -200,14 +137,17 @@ function applyFilters(){
     if(!email(item).endsWith("@edu.gobelins.fr")) return false;
     let keep = true;
 
+    // Catégorie
     if(cat) keep = keep && category(item)===cat;
 
+    // Nombre de places
     if(places){
       const p = getPlaces(item);
       if(places==="3+") keep = keep && p>=3;
       else keep = keep && p==places;
     }
 
+    // Langues parlées
     if(lang){
       const langs = parseLangs(item);
       if(lang==="fr") keep = keep && langs.includes("fr");
@@ -259,7 +199,7 @@ function openDetail(item){
   const detail = document.getElementById("detail");
   detail.style.display="block";
 
-  const gobelinsEmail = email(item);
+  const gobelinsEmail = email(item); // <-- Fix du bug
 
   detail.innerHTML=`
     <button class="back-btn" onclick="renderCards(allData)">← Retour aux annonces</button>
