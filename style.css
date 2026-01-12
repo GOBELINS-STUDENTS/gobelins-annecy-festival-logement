@@ -1,203 +1,158 @@
-/* ---------------- GENERAL ---------------- */
+<style>
+:root {
+  --bg-main: #fefefe;
+  --bg-soft: #f3f7ff;
+  --primary: #5b7cfa;
+  --secondary: #f5b7b1;
+  --text-main: #1f2937;
+  --text-soft: #6b7280;
+  --card-bg: #ffffff;
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 0;
-  background: #f5f7ff;
-  color: #222;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
 }
 
-h1, h2, h3 {
-  margin: 0.3em 0;
-  font-weight: 600;
-}
+/* ---------- HEADER ---------- */
 
-p {
-  margin: 0.2em 0;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ---------------- PORTE D'ACCES ---------------- */
-#gate {
-  position: fixed;
-  inset: 0;
-  background: #e6ebff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.gate-card {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 25px;
-  max-width: 400px;
-  width: 90%;
+header {
+  background: linear-gradient(180deg, var(--bg-soft), #ffffff);
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  padding: 4rem 1.5rem 3rem;
 }
 
-.gate-card input {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 1em;
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
 }
 
-.gate-card button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: #6c7cff;
-  color: white;
-  font-weight: 600;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.2s ease;
+header p {
+  font-size: 1.05rem;
+  color: var(--text-soft);
+  max-width: 520px;
+  margin: 0 auto;
 }
 
-.gate-card button:hover {
-  background: #5664e0;
-}
-
-#gateError {
-  color: #d33;
-  margin-top: 10px;
-  font-weight: 500;
-}
+/* ---------- LANG SWITCH ---------- */
 
 .lang-switch {
-  margin-top: 15px;
+  margin-top: 1.5rem;
 }
 
 .lang-switch button {
-  margin: 0 5px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 12px;
-  background: #aab8ff;
-  color: #222;
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  margin: 0 0.2rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .lang-switch button:hover {
-  background: #8c9cff;
-}
-
-/* ---------------- HEADER SITE ---------------- */
-header {
-  text-align: center;
-  padding: 30px 15px 10px 15px;
-  background: #f0f2ff;
-}
-
-.main-btn {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 12px 25px;
-  border-radius: 15px;
-  background: #6c7cff;
+  background: var(--primary);
   color: white;
-  font-weight: 600;
-  font-size: 1em;
-  transition: background 0.2s ease;
 }
 
-.main-btn:hover {
-  background: #5664e0;
+/* ---------- MAIN BUTTON ---------- */
+
+.main-button {
+  display: inline-block;
+  margin-top: 3rem;
+  padding: 1rem 2.4rem;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 25px rgba(91, 124, 250, 0.25);
 }
 
-/* ---------------- FILTERS ---------------- */
+.main-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(91, 124, 250, 0.35);
+}
+
+/* ---------- SECTION ---------- */
+
+section {
+  max-width: 1000px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+}
+
+/* ---------- FILTERS ---------- */
+
 .filters {
   display: flex;
-  gap: 15px;
+  gap: 0.8rem;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 20px 0;
+  margin-bottom: 2.5rem;
 }
 
-.filters select {
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 0.95em;
+select {
+  appearance: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--text-main);
 }
 
-/* ---------------- CARDS ---------------- */
-#cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 0 15px 30px 15px;
+select:focus {
+  outline: none;
+  border-color: var(--primary);
 }
+
+/* ---------- CARDS ---------- */
 
 .card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+  transition: transform 0.15s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
 }
 
 .card h3 {
-  font-size: 1.1em;
-  margin-bottom: 5px;
-  color: #333;
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
 }
 
-/* ---------------- DETAIL VIEW ---------------- */
-#detail {
-  padding: 15px;
+.card p {
+  margin: 0.3rem 0;
+  color: var(--text-soft);
+  font-size: 0.95rem;
 }
 
-.detail-card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 25px;
-  max-width: 700px;
-  margin: 0 auto 30px auto;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-}
+/* ---------- FOOTER ---------- */
 
-.back-btn {
-  margin-bottom: 15px;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 12px;
-  background: #6c7cff;
-  color: white;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s ease;
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  font-size: 0.8rem;
+  color: var(--text-soft);
 }
-
-.back-btn:hover {
-  background: #5664e0;
-}
-
-/* ---------------- RESPONSIVE ---------------- */
-@media (max-width: 600px) {
-  .filters {
-    flex-direction: column;
-    align-items: center;
-  }
-  #cards {
-    grid-template-columns: 1fr;
-  }
-}
+</style>
